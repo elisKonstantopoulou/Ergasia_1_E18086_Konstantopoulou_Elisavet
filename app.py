@@ -217,7 +217,7 @@ def delete_student():
         # usig the 'find_one' method to find a student depending on their email 
         student = students.find_one({"email":data["email"]})
         if student != None:
-            student_name = {"name":data["name"]}
+            student_name = student["name"]
             msg = {"Student " + student_name + " was successfully deleted"}
             students.delete_one(student)
             return Response(msg, status=200, mimetype='application/json')
@@ -254,7 +254,7 @@ def add_courses():
             student = students.update_one({"email":data["email"]}, 
             {"$set":
                 {
-                    "courses":student["courses"]
+                    "courses":data["courses"]
                 }
             })
             return Response("Courses added.", status=200, mimetype='application/json')
